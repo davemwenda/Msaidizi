@@ -1,0 +1,15 @@
+# --- Data processing ---
+pandas
+openpyxl          # reads .xlsx files (exam timetable, teaching timetable)
+pdfplumber        # extracts text from the handbook PDF
+
+# --- RAG pipeline ---
+sentence-transformers   # embedding model (multilingual-e5-small)
+chromadb                # vector database
+
+# --- LLM (Gemini) ---
+google-genai
+python-dotenv           # loads GEMINI_API_KEY from .env
+
+# --- Frontend ---
+streamlit

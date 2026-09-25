@@ -1,0 +1,1590 @@
+[
+  {
+    "text": "OPERATIG SYSTEMS What is an Operating System? User-centric definition  A program that acts as an intermediary between a user of a computer and the computer hardware  Defines an interface for the user to use services provided by the system  Provides a “view” of the system to the user  Converts what the hardware gives to what the user wants  The view can hide many details of the hardware that the user does not need to know  Can even give a very different view of the operating environment to the user than what is actually there System-centric definition  Efficiently manages and allocates resources to users  Controls the execution of user programs and operations of I/O devices  Provides isolation/protection between different user programs Computer System Components 1. Hardware – provides basic computing resources (CPU, memory, I/O devices) 2. Operating system – controls and coordinates the use of the hardware among the various application programs for the various users 3. Applications programs – define the ways in which the system resources are used to solve the computing problems of the users (compilers, databases, games …) 4. Users (people, machines, other computers). Abstract view of system components Types of Systems i. Batch Systems-Multiple jobs, but only one job in memory at one time and executed (till completion) before the next one starts ii. Multi-programmed Batch Systems-Multiple jobs in memory, CPU is multiplexed between them. CPU- bound vs I/O bound jobs iii. Time-sharing Systems-Multiple jobs in memory and on disk, CPU is multiplexed among jobs in memory, jobs swapped between disk and memory. Allows interaction with users iv. Multiprocessing Systems allocate jobs to ric Multiprocessing, NUMA machines … Other Parallel Systems, Distributed Systems, Clusters… Different types of systems with multiple CPUs/Machines v. Real Time Systems-Systems to run jobs with time guarantees vi. Many other types-Embedded systems, mobiles/smartphones… OS design depends on the type of system it is designed for Challenges today  Very wide variety of systems  From small embedded systems with low memory and storage to very large systems with hundreds of thousands of machines with large distributed storage (clouds, clusters)  Increasing number of cores per processor and processors per machine  Virtualization Our focus in this course:  Uniprocessor, time-sharing systems running general purpose jobs from users-Addresses most of the core OS design issues  Effect of multicore/multiprocessors-Most processors are multicore, many machines",
+    "source": "handbook",
+    "type": "handbook"
+  },
+  {
+    "text": "designed for Challenges today  Very wide variety of systems  From small embedded systems with low memory and storage to very large systems with hundreds of thousands of machines with large distributed storage (clouds, clusters)  Increasing number of cores per processor and processors per machine  Virtualization Our focus in this course:  Uniprocessor, time-sharing systems running general purpose jobs from users-Addresses most of the core OS design issues  Effect of multicore/multiprocessors-Most processors are multicore, many machines have more than one processor, will evaluate what additional issues this brings Resources Managed by OS  Physical-CPU, Memory, Disk, I/O Devices like keyboard, monitor, printer  Logical-Process, File, … Main Components of an OS Resource-Centric View  Process Management  Main Memory Management  File Management  I/O System Management  Secondary Storage Management  Security and Protection System  Networking (this is now integrated with most OS, but will be covered in the Networks course) User-centric view  System Calls  Command Interpreter (not strictly a part of an OS) Process Management A process is a program in execution-Needs certain resources to accomplish its task-CPU time, memory, files, I/O devices… OS responsibilities  Process creation and deletion  Process suspension and resumption Provide mechanisms for:  process synchronization  inter-process communication Main-Memory Management OS responsibilities  Keep track of which parts of memory are currently being used and by whom  Decide which processes to load when memory space becomes available  Allocate and deallocate memory space as needed  Protect memory of one process from another File Management OS responsibilities  File creation, deletion, modification  Directory creation, deletion, modification  Support of primitives for manipulating files and directories  Mapping files onto secondary storage.  File backup on stable (nonvolatile) storage media I/O System Management The I/O system consists of:  A buffer-caching system  Device driver interface  Drivers for specific hardware devices Secondary-Storage Management Most modern computer systems use disks as the principle on-line storage medium, for both programs and data. OS responsibilities  Free space management  Storage allocation  Disk scheduling Security and protection of system Protection refers to a mechanism for controlling access by programs, processes, or users to both system and user resources. The protection mechanism must:  distinguish between authorized and unauthorized usage  specify the controls to be imposed  provide a means of enforcement System Calls System",
+    "source": "handbook",
+    "type": "handbook"
+  },
+  {
+    "text": "Most modern computer systems use disks as the principle on-line storage medium, for both programs and data. OS responsibilities  Free space management  Storage allocation  Disk scheduling Security and protection of system Protection refers to a mechanism for controlling access by programs, processes, or users to both system and user resources. The protection mechanism must:  distinguish between authorized and unauthorized usage  specify the controls to be imposed  provide a means of enforcement System Calls System calls provide the interface between a running program and the OS-Think of it as a set of functions available to the program to call (but somewhat different from normal functions, we will see why). Generally available as assembly-language instructions. Most common languages (e.g., C, C++) have APIs that call system calls underneath Passing parameters to system calls  Pass parameters in registers  Store the parameters in a table in memory, and the table address is passed as a parameter in a register  Push (store) the parameters onto the stack by the program, and pop off the stack by operating system Command-Interpreter System Strictly not a part of OS, but always there-the shell Allows user to give commands to OS, interprets the commands and executes them-Calls appropriate functions/system calls",
+    "source": "handbook",
+    "type": "handbook"
+  },
+  {
+    "text": "On MONDAYs during 11AM-12PM, YEAR 4.2 has CCS 4204 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "MONDAY",
+    "group": "YEAR 4.2",
+    "time_slot": "11AM-12PM",
+    "course_code": "CCS 4204"
+  },
+  {
+    "text": "On MONDAYs during 8AM-9AM, YEAR 3.2 has CCS 3208 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "MONDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "8AM-9AM",
+    "course_code": "CCS 3208"
+  },
+  {
+    "text": "On MONDAYs during 11AM-12PM, YEAR 3.2 has CCS 3209 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "MONDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "11AM-12PM",
+    "course_code": "CCS 3209"
+  },
+  {
+    "text": "On MONDAYs during 9AM-10AM, YEAR 2.2 has CCS 2211 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "MONDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "9AM-10AM",
+    "course_code": "CCS 2211"
+  },
+  {
+    "text": "On MONDAYs during 11AM-12PM, YEAR 2.2 has SAS 2101 in FOOD SCIENCE WORKSHOP (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "MONDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "11AM-12PM",
+    "course_code": "SAS 2101"
+  },
+  {
+    "text": "On MONDAYs during 2PM-3PM, YEAR 2.2 has CCS 2211 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "MONDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "2PM-3PM",
+    "course_code": "CCS 2211"
+  },
+  {
+    "text": "On MONDAYs during 7AM-8AM, YEAR 1.1 (FS) has CCS 1101 in (FS+MATHS) - RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "MONDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "7AM-8AM",
+    "course_code": "CCS 1101"
+  },
+  {
+    "text": "On MONDAYs during 2PM-3PM, YEAR 1.1 (FS) has SMA 1117 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "MONDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "2PM-3PM",
+    "course_code": "SMA 1117"
+  },
+  {
+    "text": "On TUESDAYs during 11AM-12PM, YEAR 4.2 has CCS 4205 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 4.2",
+    "time_slot": "11AM-12PM",
+    "course_code": "CCS 4205"
+  },
+  {
+    "text": "On TUESDAYs during 9AM-10AM, YEAR 3.2 has CCS 3209 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "9AM-10AM",
+    "course_code": "CCS 3209"
+  },
+  {
+    "text": "On TUESDAYs during 2PM-3PM, YEAR 3.2 has CCS 3208 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "2PM-3PM",
+    "course_code": "CCS 3208"
+  },
+  {
+    "text": "On TUESDAYs during 4PM-5PM, YEAR 3.2 has CCS 3207 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "4PM-5PM",
+    "course_code": "CCS 3207"
+  },
+  {
+    "text": "On TUESDAYs during 8AM-9AM, YEAR 2.2 has CCS 2207 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "8AM-9AM",
+    "course_code": "CCS 2207"
+  },
+  {
+    "text": "On TUESDAYs during 11AM-12PM, YEAR 2.2 has CCS 2210 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "11AM-12PM",
+    "course_code": "CCS 2210"
+  },
+  {
+    "text": "On TUESDAYs during 7AM-8AM, YEAR 1.1 (CS) has CCS 1101 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 1.1 (CS)",
+    "time_slot": "7AM-8AM",
+    "course_code": "CCS 1101"
+  },
+  {
+    "text": "On TUESDAYs during 3PM-4PM, YEAR 1.1 (CS) has HNS 1100 in ONLINE (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 1.1 (CS)",
+    "time_slot": "3PM-4PM",
+    "course_code": "HNS 1100"
+  },
+  {
+    "text": "On TUESDAYs during 3PM-4PM, YEAR 1.1 (FS) has HNS 1100 in ONLINE (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "TUESDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "3PM-4PM",
+    "course_code": "HNS 1100"
+  },
+  {
+    "text": "On WEDNESDAYs during 2PM-3PM, YEAR 4.2 has CCS 4206 in SEMINAR ROOM (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 4.2",
+    "time_slot": "2PM-3PM",
+    "course_code": "CCS 4206"
+  },
+  {
+    "text": "On WEDNESDAYs during 9AM-10AM, YEAR 3.2 has CCS 3207 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "9AM-10AM",
+    "course_code": "CCS 3207"
+  },
+  {
+    "text": "On WEDNESDAYs during 5PM-6PM, YEAR 3.2 has CCS 3207 in RCL1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "5PM-6PM",
+    "course_code": "CCS 3207"
+  },
+  {
+    "text": "On WEDNESDAYs during 7AM-8AM, YEAR 2.2 has CCS 2210 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "7AM-8AM",
+    "course_code": "CCS 2210"
+  },
+  {
+    "text": "On WEDNESDAYs during 10AM-11AM, YEAR 2.2 has CCS 2207 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "10AM-11AM",
+    "course_code": "CCS 2207"
+  },
+  {
+    "text": "On WEDNESDAYs during 12PM-1PM, YEAR 2.2 has CCS 2208 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "12PM-1PM",
+    "course_code": "CCS 2208"
+  },
+  {
+    "text": "On WEDNESDAYs during 2PM-3PM, YEAR 2.2 has CCS 2208 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "2PM-3PM",
+    "course_code": "CCS 2208"
+  },
+  {
+    "text": "On WEDNESDAYs during 2PM-3PM, YEAR 1.1 (CS) has SPH 1113 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 1.1 (CS)",
+    "time_slot": "2PM-3PM",
+    "course_code": "SPH 1113"
+  },
+  {
+    "text": "On WEDNESDAYs during 8AM-9AM, YEAR 1.1 (FS) has SMA 1105 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "8AM-9AM",
+    "course_code": "SMA 1105"
+  },
+  {
+    "text": "On WEDNESDAYs during 11AM-12PM, YEAR 1.1 (FS) has CCS 1103 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "WEDNESDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "11AM-12PM",
+    "course_code": "CCS 1103"
+  },
+  {
+    "text": "On THURSDAYs during 5PM-6PM, YEAR 4.2 has CAPSTONE PROJECT 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 4.2",
+    "time_slot": "5PM-6PM",
+    "course_code": "CAPSTONE PROJECT 2"
+  },
+  {
+    "text": "On THURSDAYs during 8AM-9AM, YEAR 3.2 has CCS 3211 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "8AM-9AM",
+    "course_code": "CCS 3211"
+  },
+  {
+    "text": "On THURSDAYs during 5PM-6PM, YEAR 3.2 has IGS 3202 in ONLINE (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "5PM-6PM",
+    "course_code": "IGS 3202"
+  },
+  {
+    "text": "On THURSDAYs during 8AM-9AM, YEAR 2.2 has SMA 2215 in (CS+MATHS)  - VENUE (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "8AM-9AM",
+    "course_code": "SMA 2215"
+  },
+  {
+    "text": "On THURSDAYs during 11AM-12PM, YEAR 2.2 has CCS 2209 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "11AM-12PM",
+    "course_code": "CCS 2209"
+  },
+  {
+    "text": "On THURSDAYs during 2PM-3PM, YEAR 2.2 has CCS 2209 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "2PM-3PM",
+    "course_code": "CCS 2209"
+  },
+  {
+    "text": "On THURSDAYs during 5PM-6PM, YEAR 2.2 has IGS 2202 in ONLINE (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 2.2",
+    "time_slot": "5PM-6PM",
+    "course_code": "IGS 2202"
+  },
+  {
+    "text": "On THURSDAYs during 7AM-8AM, YEAR 1.1 (CS) has SMA 1100 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 1.1 (CS)",
+    "time_slot": "7AM-8AM",
+    "course_code": "SMA 1100"
+  },
+  {
+    "text": "On THURSDAYs during 2PM-3PM, YEAR 1.1 (CS) has IGS 1104 in SEMINAR ROOM (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 1.1 (CS)",
+    "time_slot": "2PM-3PM",
+    "course_code": "IGS 1104"
+  },
+  {
+    "text": "On THURSDAYs during 9AM-10AM, YEAR 1.1 (FS) has CCS 1102 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "9AM-10AM",
+    "course_code": "CCS 1102"
+  },
+  {
+    "text": "On THURSDAYs during 11AM-12PM, YEAR 1.1 (FS) has SMA 1211 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "11AM-12PM",
+    "course_code": "SMA 1211"
+  },
+  {
+    "text": "On THURSDAYs during 2PM-3PM, YEAR 1.1 (FS) has IGS 1104 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "2PM-3PM",
+    "course_code": "IGS 1104"
+  },
+  {
+    "text": "On THURSDAYs during 5PM-6PM, YEAR 1.1 (FS) has CCS 1102 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "THURSDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "5PM-6PM",
+    "course_code": "CCS 1102"
+  },
+  {
+    "text": "On FRIDAYs during 8AM-9AM, YEAR 4.2 has CCS  4206 RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "FRIDAY",
+    "group": "YEAR 4.2",
+    "time_slot": "8AM-9AM",
+    "course_code": "CCS  4206 RCL 1"
+  },
+  {
+    "text": "On FRIDAYs during 11AM-12PM, YEAR 3.2 has CCS 3211 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "FRIDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "11AM-12PM",
+    "course_code": "CCS 3211"
+  },
+  {
+    "text": "On FRIDAYs during 2PM-3PM, YEAR 3.2 has CCS 3210 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "FRIDAY",
+    "group": "YEAR 3.2",
+    "time_slot": "2PM-3PM",
+    "course_code": "CCS 3210"
+  },
+  {
+    "text": "On FRIDAYs during 8AM-9AM, YEAR 1.1 (CS) has BEC 2110 in RC 18 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "FRIDAY",
+    "group": "YEAR 1.1 (CS)",
+    "time_slot": "8AM-9AM",
+    "course_code": "BEC 2110"
+  },
+  {
+    "text": "On FRIDAYs during 11AM-12PM, YEAR 1.1 (CS) has SMA 1105 in AUDITORIUM (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "FRIDAY",
+    "group": "YEAR 1.1 (CS)",
+    "time_slot": "11AM-12PM",
+    "course_code": "SMA 1105"
+  },
+  {
+    "text": "On FRIDAYs during 2PM-3PM, YEAR 1.1 (CS) has CCS 1101 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "FRIDAY",
+    "group": "YEAR 1.1 (CS)",
+    "time_slot": "2PM-3PM",
+    "course_code": "CCS 1101"
+  },
+  {
+    "text": "On FRIDAYs during 11AM-12PM, YEAR 1.1 (FS) has CCS 1101 in RCL 1 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "FRIDAY",
+    "group": "YEAR 1.1 (FS)",
+    "time_slot": "11AM-12PM",
+    "course_code": "CCS 1101"
+  },
+  {
+    "text": "On 1.s during 7AM-8AM, CCS 1101 has Introduction to Computer Science (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "7AM-8AM",
+    "course_code": "Introduction to Computer Science"
+  },
+  {
+    "text": "On 1.s during 9AM-10AM, CCS 1101 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 1.s during 10AM-11AM, CCS 1101 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 1.s during 11AM-12PM, CCS 1101 has Mr. David Gichohi (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "11AM-12PM",
+    "course_code": "Mr. David Gichohi"
+  },
+  {
+    "text": "On 1.s during 12PM-1PM, CCS 1101 has 140 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "12PM-1PM",
+    "course_code": "140"
+  },
+  {
+    "text": "On 1.s during 1PM-2PM, CCS 1101 has CCS 1102 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "1PM-2PM",
+    "course_code": "CCS 1102"
+  },
+  {
+    "text": "On 1.s during 2PM-3PM, CCS 1101 has Introduction to Cyber Security (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "2PM-3PM",
+    "course_code": "Introduction to Cyber Security"
+  },
+  {
+    "text": "On 1.s during 4PM-5PM, CCS 1101 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "4PM-5PM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 1.s during 6PM-7PM, CCS 1101 has Dr. Naivasha (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 1101",
+    "time_slot": "6PM-7PM",
+    "course_code": "Dr. Naivasha"
+  },
+  {
+    "text": "On 2.s during 7AM-8AM, SMA 1105 has Discrete Mathematics (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "SMA 1105",
+    "time_slot": "7AM-8AM",
+    "course_code": "Discrete Mathematics"
+  },
+  {
+    "text": "On 2.s during 9AM-10AM, SMA 1105 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "SMA 1105",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 2.s during 11AM-12PM, SMA 1105 has Dr. Kihuga (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "SMA 1105",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Kihuga"
+  },
+  {
+    "text": "On 2.s during 1PM-2PM, SMA 1105 has CCS 1103 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "SMA 1105",
+    "time_slot": "1PM-2PM",
+    "course_code": "CCS 1103"
+  },
+  {
+    "text": "On 2.s during 2PM-3PM, SMA 1105 has Computer Ethics and Legal Issues (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "SMA 1105",
+    "time_slot": "2PM-3PM",
+    "course_code": "Computer Ethics and Legal Issues"
+  },
+  {
+    "text": "On 2.s during 4PM-5PM, SMA 1105 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "SMA 1105",
+    "time_slot": "4PM-5PM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 2.s during 6PM-7PM, SMA 1105 has Mr. Kagiri (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "SMA 1105",
+    "time_slot": "6PM-7PM",
+    "course_code": "Mr. Kagiri"
+  },
+  {
+    "text": "On 3.s during 7AM-8AM, BEC 2110 has General Economics (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "BEC 2110",
+    "time_slot": "7AM-8AM",
+    "course_code": "General Economics"
+  },
+  {
+    "text": "On 3.s during 9AM-10AM, BEC 2110 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "BEC 2110",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 3.s during 11AM-12PM, BEC 2110 has SB (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "BEC 2110",
+    "time_slot": "11AM-12PM",
+    "course_code": "SB"
+  },
+  {
+    "text": "On 3.s during 1PM-2PM, BEC 2110 has SMA 1105 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "BEC 2110",
+    "time_slot": "1PM-2PM",
+    "course_code": "SMA 1105"
+  },
+  {
+    "text": "On 3.s during 2PM-3PM, BEC 2110 has Discrete Mathemeatics (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "BEC 2110",
+    "time_slot": "2PM-3PM",
+    "course_code": "Discrete Mathemeatics"
+  },
+  {
+    "text": "On 3.s during 4PM-5PM, BEC 2110 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "BEC 2110",
+    "time_slot": "4PM-5PM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 3.s during 6PM-7PM, BEC 2110 has Dr. Kihuga (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "BEC 2110",
+    "time_slot": "6PM-7PM",
+    "course_code": "Dr. Kihuga"
+  },
+  {
+    "text": "On 4.s during 7AM-8AM, SMA 1100 has Foundation of Computational Mathematics (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "SMA 1100",
+    "time_slot": "7AM-8AM",
+    "course_code": "Foundation of Computational Mathematics"
+  },
+  {
+    "text": "On 4.s during 9AM-10AM, SMA 1100 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "SMA 1100",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 4.s during 11AM-12PM, SMA 1100 has Dr. Kihuga (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "SMA 1100",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Kihuga"
+  },
+  {
+    "text": "On 4.s during 1PM-2PM, SMA 1100 has SMA 1117 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "SMA 1100",
+    "time_slot": "1PM-2PM",
+    "course_code": "SMA 1117"
+  },
+  {
+    "text": "On 4.s during 2PM-3PM, SMA 1100 has Calculus I (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "SMA 1100",
+    "time_slot": "2PM-3PM",
+    "course_code": "Calculus I"
+  },
+  {
+    "text": "On 4.s during 4PM-5PM, SMA 1100 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "SMA 1100",
+    "time_slot": "4PM-5PM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 4.s during 6PM-7PM, SMA 1100 has MPS (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "SMA 1100",
+    "time_slot": "6PM-7PM",
+    "course_code": "MPS"
+  },
+  {
+    "text": "On 5s during 7AM-8AM, SPH 1113 has Electricity and Magnetism (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "SPH 1113",
+    "time_slot": "7AM-8AM",
+    "course_code": "Electricity and Magnetism"
+  },
+  {
+    "text": "On 5s during 9AM-10AM, SPH 1113 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "SPH 1113",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 5s during 11AM-12PM, SPH 1113 has MPS (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "SPH 1113",
+    "time_slot": "11AM-12PM",
+    "course_code": "MPS"
+  },
+  {
+    "text": "On 5s during 1PM-2PM, SPH 1113 has SMA 1211 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "SPH 1113",
+    "time_slot": "1PM-2PM",
+    "course_code": "SMA 1211"
+  },
+  {
+    "text": "On 5s during 2PM-3PM, SPH 1113 has Linear Algebra I (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "SPH 1113",
+    "time_slot": "2PM-3PM",
+    "course_code": "Linear Algebra I"
+  },
+  {
+    "text": "On 5s during 4PM-5PM, SPH 1113 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "SPH 1113",
+    "time_slot": "4PM-5PM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 5s during 6PM-7PM, SPH 1113 has Mr. Amenya (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "SPH 1113",
+    "time_slot": "6PM-7PM",
+    "course_code": "Mr. Amenya"
+  },
+  {
+    "text": "On 6s during 7AM-8AM, IGS 1104 has Introduction to Philodophy and Critical Thinking (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 1104",
+    "time_slot": "7AM-8AM",
+    "course_code": "Introduction to Philodophy and Critical Thinking"
+  },
+  {
+    "text": "On 6s during 9AM-10AM, IGS 1104 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 1104",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 6s during 11AM-12PM, IGS 1104 has IGS (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 1104",
+    "time_slot": "11AM-12PM",
+    "course_code": "IGS"
+  },
+  {
+    "text": "On 6s during 1PM-2PM, IGS 1104 has IGS 1104 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 1104",
+    "time_slot": "1PM-2PM",
+    "course_code": "IGS 1104"
+  },
+  {
+    "text": "On 6s during 2PM-3PM, IGS 1104 has Introduction to Philosophy and Critical Thinking (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 1104",
+    "time_slot": "2PM-3PM",
+    "course_code": "Introduction to Philosophy and Critical Thinking"
+  },
+  {
+    "text": "On 6s during 4PM-5PM, IGS 1104 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 1104",
+    "time_slot": "4PM-5PM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 6s during 6PM-7PM, IGS 1104 has IGS (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 1104",
+    "time_slot": "6PM-7PM",
+    "course_code": "IGS"
+  },
+  {
+    "text": "On 7s during 7AM-8AM, HNS 1100 has Gender, HIV/AIDS and Substance Use (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "HNS 1100",
+    "time_slot": "7AM-8AM",
+    "course_code": "Gender, HIV/AIDS and Substance Use"
+  },
+  {
+    "text": "On 7s during 9AM-10AM, HNS 1100 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "HNS 1100",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 7s during 11AM-12PM, HNS 1100 has NURSING (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "HNS 1100",
+    "time_slot": "11AM-12PM",
+    "course_code": "NURSING"
+  },
+  {
+    "text": "On 7s during 1PM-2PM, HNS 1100 has HNS 1100 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "HNS 1100",
+    "time_slot": "1PM-2PM",
+    "course_code": "HNS 1100"
+  },
+  {
+    "text": "On 7s during 2PM-3PM, HNS 1100 has Gender, HIV/AIDS and Substance Abuse (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "HNS 1100",
+    "time_slot": "2PM-3PM",
+    "course_code": "Gender, HIV/AIDS and Substance Abuse"
+  },
+  {
+    "text": "On 7s during 4PM-5PM, HNS 1100 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "HNS 1100",
+    "time_slot": "4PM-5PM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 7s during 6PM-7PM, HNS 1100 has NURSING (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "HNS 1100",
+    "time_slot": "6PM-7PM",
+    "course_code": "NURSING"
+  },
+  {
+    "text": "On 1.s during 7AM-8AM, CCS 2207 has Internet Application Programming (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 2207",
+    "time_slot": "7AM-8AM",
+    "course_code": "Internet Application Programming"
+  },
+  {
+    "text": "On 1.s during 9AM-10AM, CCS 2207 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 2207",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 1.s during 10AM-11AM, CCS 2207 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 2207",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 1.s during 11AM-12PM, CCS 2207 has Dr. Moso (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 2207",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Moso"
+  },
+  {
+    "text": "On 1.s during 12PM-1PM, CCS 2207 has 90 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1.",
+    "group": "CCS 2207",
+    "time_slot": "12PM-1PM",
+    "course_code": "90"
+  },
+  {
+    "text": "On 2.s during 7AM-8AM, CCS 2208 has Computer Graphics (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "CCS 2208",
+    "time_slot": "7AM-8AM",
+    "course_code": "Computer Graphics"
+  },
+  {
+    "text": "On 2.s during 9AM-10AM, CCS 2208 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "CCS 2208",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 2.s during 10AM-11AM, CCS 2208 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "CCS 2208",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 2.s during 11AM-12PM, CCS 2208 has Dr. Moso (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2.",
+    "group": "CCS 2208",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Moso"
+  },
+  {
+    "text": "On 3.s during 7AM-8AM, CCS 2209 has Computer Networks (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "CCS 2209",
+    "time_slot": "7AM-8AM",
+    "course_code": "Computer Networks"
+  },
+  {
+    "text": "On 3.s during 9AM-10AM, CCS 2209 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "CCS 2209",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 3.s during 10AM-11AM, CCS 2209 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "CCS 2209",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 3.s during 11AM-12PM, CCS 2209 has Dr. Naivasha (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3.",
+    "group": "CCS 2209",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Naivasha"
+  },
+  {
+    "text": "On 4.s during 7AM-8AM, CCS 2210 has Knowledge Reporesentation and Reasoning (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "CCS 2210",
+    "time_slot": "7AM-8AM",
+    "course_code": "Knowledge Reporesentation and Reasoning"
+  },
+  {
+    "text": "On 4.s during 9AM-10AM, CCS 2210 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "CCS 2210",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 4.s during 10AM-11AM, CCS 2210 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "CCS 2210",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 4.s during 11AM-12PM, CCS 2210 has Dr. Kituku (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4.",
+    "group": "CCS 2210",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Kituku"
+  },
+  {
+    "text": "On 5.s during 7AM-8AM, CCS 2211 has Object Oriented Programming (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5.",
+    "group": "CCS 2211",
+    "time_slot": "7AM-8AM",
+    "course_code": "Object Oriented Programming"
+  },
+  {
+    "text": "On 5.s during 9AM-10AM, CCS 2211 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5.",
+    "group": "CCS 2211",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 5.s during 10AM-11AM, CCS 2211 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5.",
+    "group": "CCS 2211",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 5.s during 11AM-12PM, CCS 2211 has Mr. Kagiri (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5.",
+    "group": "CCS 2211",
+    "time_slot": "11AM-12PM",
+    "course_code": "Mr. Kagiri"
+  },
+  {
+    "text": "On 6.s during 7AM-8AM, IGS 2202 has Communication Skills: African Technology and Literature (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6.",
+    "group": "IGS 2202",
+    "time_slot": "7AM-8AM",
+    "course_code": "Communication Skills: African Technology and Literature"
+  },
+  {
+    "text": "On 6.s during 9AM-10AM, IGS 2202 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6.",
+    "group": "IGS 2202",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 6.s during 10AM-11AM, IGS 2202 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6.",
+    "group": "IGS 2202",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 6.s during 11AM-12PM, IGS 2202 has IGS (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6.",
+    "group": "IGS 2202",
+    "time_slot": "11AM-12PM",
+    "course_code": "IGS"
+  },
+  {
+    "text": "On 7s during 7AM-8AM, SAS 2101 has Probability & Statistics I (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "SAS 2101",
+    "time_slot": "7AM-8AM",
+    "course_code": "Probability & Statistics I"
+  },
+  {
+    "text": "On 7s during 9AM-10AM, SAS 2101 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "SAS 2101",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 7s during 11AM-12PM, SAS 2101 has Ms. Beatrice Marwa (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "7",
+    "group": "SAS 2101",
+    "time_slot": "11AM-12PM",
+    "course_code": "Ms. Beatrice Marwa"
+  },
+  {
+    "text": "On 8s during 7AM-8AM, SMA 2215 has Vector Analysis (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "8",
+    "group": "SMA 2215",
+    "time_slot": "7AM-8AM",
+    "course_code": "Vector Analysis"
+  },
+  {
+    "text": "On 8s during 9AM-10AM, SMA 2215 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "8",
+    "group": "SMA 2215",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 8s during 11AM-12PM, SMA 2215 has Mr. Amenya R. O. (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "8",
+    "group": "SMA 2215",
+    "time_slot": "11AM-12PM",
+    "course_code": "Mr. Amenya R. O."
+  },
+  {
+    "text": "On 1s during 7AM-8AM, CCS 3207 has Compiler Construction (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 3207",
+    "time_slot": "7AM-8AM",
+    "course_code": "Compiler Construction"
+  },
+  {
+    "text": "On 1s during 9AM-10AM, CCS 3207 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 3207",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 1s during 10AM-11AM, CCS 3207 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 3207",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 1s during 11AM-12PM, CCS 3207 has Dr. Kituku (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 3207",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Kituku"
+  },
+  {
+    "text": "On 1s during 12PM-1PM, CCS 3207 has 90 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 3207",
+    "time_slot": "12PM-1PM",
+    "course_code": "90"
+  },
+  {
+    "text": "On 2s during 7AM-8AM, CCS 3208 has Multimedia Systems (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2",
+    "group": "CCS 3208",
+    "time_slot": "7AM-8AM",
+    "course_code": "Multimedia Systems"
+  },
+  {
+    "text": "On 2s during 9AM-10AM, CCS 3208 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2",
+    "group": "CCS 3208",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 2s during 10AM-11AM, CCS 3208 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2",
+    "group": "CCS 3208",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 2s during 11AM-12PM, CCS 3208 has Dr. Musumba (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2",
+    "group": "CCS 3208",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Musumba"
+  },
+  {
+    "text": "On 3s during 7AM-8AM, CCS 3209 has Simulation and Modelling (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3",
+    "group": "CCS 3209",
+    "time_slot": "7AM-8AM",
+    "course_code": "Simulation and Modelling"
+  },
+  {
+    "text": "On 3s during 9AM-10AM, CCS 3209 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3",
+    "group": "CCS 3209",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 3s during 10AM-11AM, CCS 3209 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3",
+    "group": "CCS 3209",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 3s during 11AM-12PM, CCS 3209 has Dr. Musumba (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3",
+    "group": "CCS 3209",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Musumba"
+  },
+  {
+    "text": "On 4s during 7AM-8AM, CCS 3210 has Research Methods in Computer Science (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4",
+    "group": "CCS 3210",
+    "time_slot": "7AM-8AM",
+    "course_code": "Research Methods in Computer Science"
+  },
+  {
+    "text": "On 4s during 9AM-10AM, CCS 3210 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4",
+    "group": "CCS 3210",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 4s during 11AM-12PM, CCS 3210 has Mr. Opondo (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4",
+    "group": "CCS 3210",
+    "time_slot": "11AM-12PM",
+    "course_code": "Mr. Opondo"
+  },
+  {
+    "text": "On 5s during 7AM-8AM, CCS 3211 has Mobile Application Development (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "CCS 3211",
+    "time_slot": "7AM-8AM",
+    "course_code": "Mobile Application Development"
+  },
+  {
+    "text": "On 5s during 9AM-10AM, CCS 3211 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "CCS 3211",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 5s during 10AM-11AM, CCS 3211 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "CCS 3211",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 5s during 11AM-12PM, CCS 3211 has Mr. Opondo (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "CCS 3211",
+    "time_slot": "11AM-12PM",
+    "course_code": "Mr. Opondo"
+  },
+  {
+    "text": "On 6s during 7AM-8AM, IGS 3202 has Communication Skills: The Arts of Africa (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 3202",
+    "time_slot": "7AM-8AM",
+    "course_code": "Communication Skills: The Arts of Africa"
+  },
+  {
+    "text": "On 6s during 9AM-10AM, IGS 3202 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 3202",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 6s during 11AM-12PM, IGS 3202 has IGS (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "6",
+    "group": "IGS 3202",
+    "time_slot": "11AM-12PM",
+    "course_code": "IGS"
+  },
+  {
+    "text": "On 1s during 7AM-8AM, CCS 4204 has Professional Issues in ICT (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 4204",
+    "time_slot": "7AM-8AM",
+    "course_code": "Professional Issues in ICT"
+  },
+  {
+    "text": "On 1s during 9AM-10AM, CCS 4204 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 4204",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 1s during 11AM-12PM, CCS 4204 has Mr. Kagiri (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 4204",
+    "time_slot": "11AM-12PM",
+    "course_code": "Mr. Kagiri"
+  },
+  {
+    "text": "On 1s during 12PM-1PM, CCS 4204 has 90 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "1",
+    "group": "CCS 4204",
+    "time_slot": "12PM-1PM",
+    "course_code": "90"
+  },
+  {
+    "text": "On 2s during 7AM-8AM, CCS 4205 has Entrepreneurship and Product Dev (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2",
+    "group": "CCS 4205",
+    "time_slot": "7AM-8AM",
+    "course_code": "Entrepreneurship and Product Dev"
+  },
+  {
+    "text": "On 2s during 9AM-10AM, CCS 4205 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2",
+    "group": "CCS 4205",
+    "time_slot": "9AM-10AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 2s during 11AM-12PM, CCS 4205 has Dr. Musumba (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "2",
+    "group": "CCS 4205",
+    "time_slot": "11AM-12PM",
+    "course_code": "Dr. Musumba"
+  },
+  {
+    "text": "On 3s during 7AM-8AM, CCS 4206 has Embedded Systems (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3",
+    "group": "CCS 4206",
+    "time_slot": "7AM-8AM",
+    "course_code": "Embedded Systems"
+  },
+  {
+    "text": "On 3s during 9AM-10AM, CCS 4206 has 2 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3",
+    "group": "CCS 4206",
+    "time_slot": "9AM-10AM",
+    "course_code": "2"
+  },
+  {
+    "text": "On 3s during 10AM-11AM, CCS 4206 has 3 (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3",
+    "group": "CCS 4206",
+    "time_slot": "10AM-11AM",
+    "course_code": "3"
+  },
+  {
+    "text": "On 3s during 11AM-12PM, CCS 4206 has Mr. Kaburu (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "3",
+    "group": "CCS 4206",
+    "time_slot": "11AM-12PM",
+    "course_code": "Mr. Kaburu"
+  },
+  {
+    "text": "On 4s during 7AM-8AM, CCS 4199 has Computer Systems Project (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4",
+    "group": "CCS 4199",
+    "time_slot": "7AM-8AM",
+    "course_code": "Computer Systems Project"
+  },
+  {
+    "text": "On 4s during 11AM-12PM, CCS 4199 has ALL STAFF (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "4",
+    "group": "CCS 4199",
+    "time_slot": "11AM-12PM",
+    "course_code": "ALL STAFF"
+  },
+  {
+    "text": "On 5s during 7AM-8AM, CAPSTONE II has CAPSTONE PROJECT II (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "CAPSTONE II",
+    "time_slot": "7AM-8AM",
+    "course_code": "CAPSTONE PROJECT II"
+  },
+  {
+    "text": "On 5s during 11AM-12PM, CAPSTONE II has ALL STAFF (September - December 2026 semester).",
+    "source": "timetable",
+    "type": "timetable",
+    "day": "5",
+    "group": "CAPSTONE II",
+    "time_slot": "11AM-12PM",
+    "course_code": "ALL STAFF"
+  },
+  {
+    "text": "The Year 2 exam for SMA 1218 (Calculus II) is on Monday, September 14, 2026, from 11.00 am - 1.00pm in RC 18.",
+    "source": "exam_timetable",
+    "type": "exam",
+    "year": "Year 2",
+    "day": "Monday",
+    "date": "September 14, 2026",
+    "course_code": "SMA 1218",
+    "unit_name": "Calculus II"
+  },
+  {
+    "text": "The Year 2 exam for SAS 2101 (Probability and Statistics I) is on Tuesday, September 15, 2026, from 2.00pm - 4.00pm in RC18.",
+    "source": "exam_timetable",
+    "type": "exam",
+    "year": "Year 2",
+    "day": "Tuesday",
+    "date": "September 15, 2026",
+    "course_code": "SAS 2101",
+    "unit_name": "Probability and Statistics I"
+  },
+  {
+    "text": "The Year 2 exam for CCS 2102 (Data Structures and Algorithms) is on Wednesday, September 16, 2026, from 11.00 am - 1.00pm in RC18.",
+    "source": "exam_timetable",
+    "type": "exam",
+    "year": "Year 2",
+    "day": "Wednesday",
+    "date": "September 16, 2026",
+    "course_code": "CCS 2102",
+    "unit_name": "Data Structures and Algorithms"
+  },
+  {
+    "text": "The Year 2 exam for CCS 2103 (Operating Systems) is on Thursday, September 17, 2026, from 11.00 am - 1.00pm in RC18.",
+    "source": "exam_timetable",
+    "type": "exam",
+    "year": "Year 2",
+    "day": "Thursday",
+    "date": "September 17, 2026",
+    "course_code": "CCS 2103",
+    "unit_name": "Operating Systems"
+  },
+  {
+    "text": "The Year 2 exam for CCS 2104 (Digital Logic) is on Friday, September 18, 2026, from 11.00 am - 1.00pm in RC18.",
+    "source": "exam_timetable",
+    "type": "exam",
+    "year": "Year 2",
+    "day": "Friday",
+    "date": "September 18, 2026",
+    "course_code": "CCS 2104",
+    "unit_name": "Digital Logic"
+  },
+  {
+    "text": "The Year 2 exam for CCS 2105 (Programming Languages) is on Monday, September 21, 2026, from 11.00 am - 1.00 pm in RC18.",
+    "source": "exam_timetable",
+    "type": "exam",
+    "year": "Year 2",
+    "day": "Monday",
+    "date": "September 21, 2026",
+    "course_code": "CCS 2105",
+    "unit_name": "Programming Languages"
+  },
+  {
+    "text": "The Year 2 exam for CCS 2101 (Database Systems) is on Tuesday, September 22, 2026, from 11.00 am - 1.00 pm in RC 18.",
+    "source": "exam_timetable",
+    "type": "exam",
+    "year": "Year 2",
+    "day": "Tuesday",
+    "date": "September 22, 2026",
+    "course_code": "CCS 2101",
+    "unit_name": "Database Systems"
+  }
+]
